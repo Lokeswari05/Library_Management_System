@@ -26,7 +26,7 @@ export async function registerUser(req, res){
             if(existingUser.isVerified) return res.status(400).json({
                 message: " User aldready exists"
             });
-            await User.deletOne({ email })
+            await User.deleteOne({ email });
         }
 
         const otp = generate(6, {
@@ -67,7 +67,7 @@ export async function registerUser(req, res){
 
 // step: 2 verify the otp
 
-export async function verifyOtp(res, req){
+export async function verifyOtp(req, res){
     try{
         const {email, otp } = req.body;
         if(!email) return res.status(400).json({message: "Email is required."});
