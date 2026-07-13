@@ -4,6 +4,7 @@ import 'dotenv/config';
 import { connectDB } from './config/db.js';
 import authRouter from './routes/authRoutes.js';
 import studentRouter from './routes/studentRoutes.js';
+import bookRouter from './routes/bookRoutes.js';
 
 const PORT = 5000;
 const app = express();
@@ -12,12 +13,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+
 //db  
 connectDB(); 
  
 //routes
 app.use('/api/auth', authRouter); 
 app.use('/api/students', studentRouter); // Add this line to include student routes
+app.use('/api/books', bookRouter); // Add this line to include book routes
 
 app.get("/", (req, res) => {
     res.send("API WORKING");
