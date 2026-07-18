@@ -1,9 +1,10 @@
 // import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
-import {BookMarked, Users, ShieldCheck} from 'lucide-react';
+import {BookMarked, Users, ShieldCheck, ArrowRight} from 'lucide-react';
 import { useAuth } from '../shared/AuthContext';
 import { homeStyles as s} from '../assets/dummyStyles';
+import { createElement } from 'react';
 
 
 const navItems = [
@@ -24,7 +25,7 @@ const navItems = [
 ];
 
 const features = [
-  {
+  { 
     icon: BookMarked,
     title: "Manual book issuing",
     text: "Track manual book issues, due dates, returns, and dynamic fine calculations in one workflow.",
@@ -80,11 +81,69 @@ const Home = () => {
           <section className = {s.heroSection}>
             <div className = {s.heroGrid}>
               <div>
-                <span className = {s.heroBadge}>
-                  Library Management Website
-                </span>
+                <span className = {s.heroBadge}>Library Management Website</span>
+                <h1 className ={s.heroTitle}>
+                  Manage students, books, returns, and fines in one library dashboard.
+                </h1>
+                <p className={s.heroText}>
+                  This library management portal gives students a focused borrowing
+                  dashboard and gives admins a practical workspace for manual circulation, user rcords and overdue tracking.
+                </p>
+
+                <div className={s.heroButtons}>
+                  {currentUser ? (
+                    <Link to ={
+                      currentUser.role === "admin" ?
+                      "/admin/dashboard" : "/user/dashboard"
+                    } className={s.heroButtonPrimary}>
+                      Go to Dashboard
+                      <ArrowRight size ={16}/>
+                    </Link>
+                  ): (
+                    <>
+                    <Link to ="/signup" className ={s.heroButtonPrimary}>
+                    Create Account 
+                    <ArrowRight size ={16}/>
+                    </Link>
+
+                    <Link to ="/login" className ={s.heroButtonSecondary}>
+                    Login Now
+                    <ArrowRight size ={16}/>
+                    </Link>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div className= "grid gap-4">
+                <div className={s.infoCard}>
+                  <p className ={s.infoCardLabel}>Library Worflow</p>
+                  <p className={s.infoCardTitle}>
+                    Separate student and admin dashboard built for daily library operations.
+                  </p>
+
+                  <p className={s.infoCardText}>
+                    Monitor issue activity, keep profile records updated, and track overdue follow-up without leaving the system.
+                  </p>
+                </div>
               </div>
             </div>
+          </section>
+
+          <section className = {s.featuresGrid}>
+            {features.map(({icon, title, text}) => (
+              <article key ={title} className={s.featureCard}>
+                <span className={s.featureIconWrapper}>
+                  {createElement(icon,{soze:22 })}
+                </span>
+
+                <h2 className={s.featureTitle}> {title} </h2>
+                <p className ={s.featureText}> {text} </p>
+              </article>
+            )
+          )}
+
+
           </section>
         </div>
       </main>
