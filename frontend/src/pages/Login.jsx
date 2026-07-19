@@ -193,7 +193,7 @@ const Login = () => {
                             <div className = {s.passwordWrapper}>
                                 <input 
                                     type={showPassword ? "text" : "password"}
-                                    name="email"
+                                    name="password"
                                     value={form.password}
                                     onChange={handleChange}
                                     placeholder='Enter password' 
