@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import {signupStyles as s} from "../assets/dummyStyles"
 import { useAuth } from '../shared/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, BadgeCheck, Eye, EyeOff, KeyRound, LockKeyhole, Mail, Phone, Sparkles, UserRound } from 'lucide-react';
+import { ArrowRight, BadgeCheck, CheckCircle2, Eye, EyeOff, KeyRound, LockKeyhole, Mail, Phone, Sparkles, UserRound } from 'lucide-react';
 import { studentSemesters, studentYears } from '../data/libraryData';
 
 const stepList = [
@@ -17,7 +17,7 @@ const signupHighlights = [
   "Step 3 saves department, stream, semester, year, and roll number.",
 ];
 
-const demoOtp = "2468";
+/*const demoOtp = "2468";*/
 
 const Signup = () => {
 
@@ -51,7 +51,7 @@ const Signup = () => {
     const handleChange = (event) => {
         const {name, value} = event.target;
         setError("");
-        if(name === "Phone"){
+        if(name === "phone"){
             const digitsOnly = value.replace(/\D/g,"").slice(0, 10);
             setForm((current) => ({...current, [name] : digitsOnly}));
         } else{
@@ -188,8 +188,8 @@ const Signup = () => {
     return (
     <div className = {s.pageContainer}>
         {toast && (
-            <div className ={`S{s.toastBase}
-                ${toast.tone === "error" ? s.toastError : s.toastSuccess
+            <div className ={`${s.toastBase}${
+                toast.tone === "error" ? s.toastError : s.toastSuccess
                 }`}
             >
                 <div className={s.toastContent}>
@@ -222,7 +222,7 @@ const Signup = () => {
                                 }
                             >
                                 <p className ={s.stepLabel}>Step {item.id}</p>
-                                <p className ={s.stepLabel}> {item.title}</p>
+                                <p className ={s.stepTitle}> {item.title}</p>
                             </div>
                         ))}
                     </div>
@@ -279,16 +279,18 @@ const Signup = () => {
                                         Password
                                     </span>
                                     <div className={s.passwordWrapper}>
-                                        <input type= {showPassword ? "text" : "password"}
-                                        name ="password" 
-                                        value ={form.password} 
-                                        onChange= {handleChange} 
-                                        placeholder='Create password'
-                                        className={s.passwordInput}
+                                        <input 
+                                            type= {showPassword ? "text" : "password"}
+                                            name ="password" 
+                                            value ={form.password} 
+                                            onChange= {handleChange} 
+                                            placeholder='Create password'
+                                            className={s.passwordInput}
                                         />
                                         <button type="button"
-                                            onClick={() => setShowPassword((current) != current)} 
-                                            className={s.toggleButton}>
+                                            onClick={() => setShowPassword((current) => !current)} 
+                                            className={s.toggleButton}
+                                        >
                                             {showPassword ? <EyeOff size ={17} /> : <Eye size={17} />}
                                         </button>
                                     </div>
@@ -402,7 +404,7 @@ const Signup = () => {
 
                     {error && <div className={s.errorMessage}>{error}</div>}
 
-                    <div classname ={s.buttonGroup}>
+                    <div className ={s.buttonGroup}>
                         {step > 1 && (
                             <button 
                                 type = "button"
@@ -445,14 +447,14 @@ const Signup = () => {
                     Step wise signup
                 </span>
                 <h2 className = {s.infoTitle}>
-                    Create the student account, varify OTP, and finish the profile in three steps.
+                    Create the student account, verify OTP, and finish the profile in three steps.
                 </h2>
 
                 <div className={s.infoList}>
                     {signupHighlights.map((item) => (
                         <div key ={item} className={s.infoListItem}>
                             <BadgeCheck size={18} className={s.infoIcon} />
-                            {item}
+                            <span>{item}</span>
                         </div>
                     ))}
                 </div>
@@ -460,6 +462,6 @@ const Signup = () => {
         </div>
     </div>
     );
-;}
+};
 
 export default Signup
