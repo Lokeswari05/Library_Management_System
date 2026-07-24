@@ -94,7 +94,7 @@ export async function issueManualBooks(req, res){
 // 2. get all the manual issues (admin)
 export async function getIssues(req, res){
     try{
-        const issues = (await Issue.find({ })).toSorted({ createdAt: -1});
+        const issues = await Issue.find().sort({ createdAt: -1 });
         res.status(200).json({
             success: true,
             issues
